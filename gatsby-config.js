@@ -4,6 +4,8 @@
  * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
  */
 
+const { resolve } = require('path');
+
 /**
  * @type {import('gatsby').GatsbyConfig}
  */
@@ -35,6 +37,22 @@ module.exports = {
       options: {
         fonts: ["Satisfy", "Montserrat", "JetBrains Mono"],
         display: "swap"
+      }
+    },
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [`.md`, `.mdx`],
+        gatsbyRemarkPlugins: [
+          {
+          resolve: `gatsby-remark-images`,
+          options: {
+            maxWidth: 590,
+          },
+        },
+        ],
       }
     },
   ],
