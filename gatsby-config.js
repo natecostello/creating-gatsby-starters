@@ -39,6 +39,7 @@ module.exports = {
         display: "swap"
       }
     },
+    `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
     {

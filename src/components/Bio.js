@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Img from "gatsby-image";
+import { GatsbyImage } from "gatsby-plugin-image";
 import { useStaticQuery, graphql } from "gatsby";
 import { GiDove } from "react-icons/gi";
 
@@ -25,19 +25,17 @@ h3 {
 `;
 export const Bio = () => {
     const data = useStaticQuery(graphql`
-    query {
-        imageSharp(fixed: { originalName: { eq: "portrait.png" } }) {
-            id
-            fixed(width: 250, height: 250) {
-                ...GatsbyImageSharpFixed
-            }
+    query 
+    {
+        imageSharp(fixed: {originalName: {eq: "portrait.png"}}) {
+            gatsbyImageData(layout: FIXED, height: 250, width: 250)
         }
     }
     `);
     return (
         <BioWrapper>
-        <Img
-        fixed={data.imageSharp.fixed}
+        <GatsbyImage
+        image={data.imageSharp.gatsbyImageData}
         style={{ borderRadius: "50%", left: "0", top: "0" }}
         alt="My Avatar"
         />
