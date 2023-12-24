@@ -12,6 +12,7 @@ const { resolve } = require('path');
 module.exports = {
   siteMetadata: {
     title: `Gatsby Starter Blog`,
+    lang: `en`,
     author: {
       name: `Ashutosh Kumar Singh`,
     },
