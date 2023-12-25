@@ -1,16 +1,58 @@
 import React from "react";
+import { graphql } from "gatsby";
 import { Container } from "../components/Container";
-import { Bio } from "../components/Bio";
 import { SEO } from "../components/Seo";
+import { PostContainer } from "../components/PostContainer";
+import { Bio } from "../components/Bio";
 
-export default function Home() {
-  return (
-    <Container>
-    <Bio />
-    </Container>
+export default function Home({ data }) {
+  const posts = data.allMdx.edges;
+  if (posts.length === 0) {
+    return (
+      <Container>
+        <Bio />
+        <p>
+          No blog posts found. Add markdown posts to "src/posts" (or the
+          directory you specified for the "gatsby-source-filesystem" plugin in
+          gatsby-config.js).
+        </p>
+      </Container>
     );
   }
+  return (
+    <Container>
+      <Bio />
+      {posts.map((post) => (
+        <PostContainer
+          key={post.node.id}
+          date={post.node.frontmatter.date}
+          title={post.node.frontmatter.title}
+          slug={post.node.frontmatter.slug}
+          excerpt={post.node.frontmatter.excerpt}
+        />
+      ))}
+    </Container>
+  );
+}
 
-export const Head = () => (
-  <SEO />
-)
+export const pageQuery = graphql`
+  query AllPostsQuery {
+    allMdx(sort: { frontmatter: { date: DESC } }) {
+      edges {
+        node {
+          frontmatter {
+            slug
+            title
+            excerpt
+            date(formatString: "MMMM DD, YYYY")
+          }
+          id
+        }
+      }
+    }
+  }
+`;
+
+export const Head = () => {
+  return <SEO />;
+};
